@@ -1,0 +1,105 @@
+type Event {
+        id: ID
+        title: String
+        desc: String
+        date: String
+        from: String
+        to: String
+        location: Location
+        user: User
+        participants: [Participant]
+    }
+    type Location {
+        id: ID
+        name: String
+        desc: String
+        lat: Float
+        lng: Float
+    }
+    type User {
+        id: ID
+        username: String
+        email: String
+        events : [Event]
+        participant: Participant
+    }
+    type Participant {
+        id: ID
+        user: User
+        event: Event 
+    }
+    input CreateUserInput{
+        username: String
+        email: String
+        events: String
+    }
+    input updateUser {
+        username: String
+        email: String
+    }
+    input createEventInput {
+        id: ID
+        title: String
+        desc: String
+        date: String
+        from: String
+        to: String
+        
+    }
+    input updateEvent {
+        title: String
+        desc: String
+        date: String
+        from: String
+        to: String
+    }
+    input createLocationInput {
+        id: ID
+        name: String
+        desc: String
+        lat: Float
+        lng: Float
+    }
+    input updateLocation {
+        name: String
+        desc: String
+        lat: Float
+        lng: Float
+    }
+    input createParticipantInput {
+        id: ID  
+    }
+    type deleteAllOutput {
+        count: Int
+    }
+    type Mutation {
+        #User
+        createUser(data: CreateUserInput): User
+        createEvent(data: createEventInput): Event
+        createLocation(data: createLocationInput): Location
+        createParticipant(data: createParticipantInput): Participant
+        updateUser(id: ID, data: updateUser): User
+        updateEvent(id: ID, data: updateEvent): Event
+        updateLocation(id: ID, data: updateLocation): Location
+        deleteUser(id: ID): User
+        deleteEvent(id: ID): Event
+        deleteLocation(id: ID): User
+        deleteAllUser: deleteAllOutput
+        deleteAllEvent: deleteAllOutput
+        deleteAllLocation: deleteAllOutput
+    }
+    type Query {
+        events: [Event]
+        event(id: ID): Event
+        users: [User]
+        user(id: ID): User
+        locations: [Location]
+        location(id: ID): Location!
+        participants: [Participant]    
+        participant(id: ID): Participant
+    }
+    type Subscription {
+        userCreated: User
+        eventCreated: Event
+        participantCreated: Participant
+    }
