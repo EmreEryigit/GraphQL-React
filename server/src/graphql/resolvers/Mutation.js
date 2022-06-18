@@ -8,7 +8,7 @@ const Mutation = {
     },
     createEvent: (parent, { data }, {pubsub,db}) => {
         const newEvent = {...data, id: Math.random()}
-        db.events.push(newEvent)
+        db.events.shift(newEvent)
         pubsub.publish("eventCreated", {eventCreated: newEvent})
         return newEvent
     },
@@ -18,7 +18,9 @@ const Mutation = {
         return newLocation
     },
     createParticipant: (parent, { data }, {pubsub,db}) => {
+    
         const newParticipant = {...data, id: Math.random()}
+   
         db.participants.push(newParticipant)
         pubsub.publish("participantCreated", {participantCreated: newParticipant})
         return newParticipant

@@ -68,6 +68,8 @@ type Event {
     }
     input createParticipantInput {
         id: ID  
+        event_id: ID
+        user_id: ID
     }
     type deleteAllOutput {
         count: Int
@@ -101,5 +103,5 @@ type Event {
     type Subscription {
         userCreated: User
         eventCreated: Event
-        participantCreated: Participant
+        participantCreated(event_id: ID): Participant
     }

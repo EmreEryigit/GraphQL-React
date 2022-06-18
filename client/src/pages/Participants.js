@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {gql, useLazyQuery} from "@apollo/client"
 import Loading from '../components/Loading'
 const GET_EVENT_PARTICIPANTS = gql`
@@ -12,10 +12,31 @@ const GET_EVENT_PARTICIPANTS = gql`
         }
     }
 `
+const PART_SUB = gql`
+    subscription created($event_id: ID){
+        participantCreated(event_id: $event_id){
+
+                user {
+                    username
+                }
+            
+  }
+}
+`
 function Participants(props) {
     
-    const [loadPart, {called, loading, data}] = useLazyQuery(GET_EVENT_PARTICIPANTS,{variables:{id: props.id}})
-    console.log(data)
+    const [loadPart, {called, loading, data, subscribeToMore}] = useLazyQuery(GET_EVENT_PARTICIPANTS,{variables:{id: props.id}})
+    useEffect(() => {
+        
+            subscribeToMore({
+                document: PART_SUB,
+                updateQuery: (prev , {subData}) => {
+                  console.log(prev);
+                  console.log(subData)
+                }
+            })
+        
+    }, [subscribeToMore, called, loading])
     if(loading && called){
         return <Loading />
     }
@@ -26,7 +47,7 @@ function Participants(props) {
     <div>
          <ul>
             <li><h3>Participants</h3></li>
-            {data.event.participants.map(p => <li>{p.user.username}</li>)}
+            {data.event.participants.map((p,i ) => <li key={i}>{p.user.username}</li>)}
         </ul>
     </div>
   )

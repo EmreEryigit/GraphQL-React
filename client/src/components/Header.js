@@ -13,7 +13,7 @@ function Header() {
             <Link to="/new">New</Link>
         </Menu.Item>
         <Menu.SubMenu title="other">
-          <Menu.Item>asd</Menu.Item>
+          <Menu.Item></Menu.Item>
         </Menu.SubMenu>
       </Menu>
     )
