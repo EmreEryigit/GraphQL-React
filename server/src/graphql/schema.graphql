@@ -44,6 +44,8 @@ type Event {
         date: String
         from: String
         to: String
+        location:String
+        user_id: String
         
     }
     input updateEvent {

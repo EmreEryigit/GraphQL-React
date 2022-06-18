@@ -1,8 +1,11 @@
 import React from 'react'
+import NewPostForm from '../components/NewPostForm'
 
 function NewPost() {
   return (
-    <div>NewPost</div>
+    <div>
+      <NewPostForm />
+    </div>
   )
 }
 
